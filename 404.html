@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>NOSH7</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://nosh7.com/">
+<noscript><meta http-equiv="refresh" content="0; url=https://nosh7.com/"></noscript>
+<script>
+// www.nosh7.com only exists to clear what the old store left on phones, then hand over to nosh7.com.
+(function () {
+  var target = 'https://nosh7.com' + location.pathname + location.search + location.hash;
+  var go = function () { location.replace(target); };
+  var jobs = [];
+  if ('serviceWorker' in navigator) {
+    jobs.push(navigator.serviceWorker.getRegistrations().then(function (regs) {
+      return Promise.all(regs.map(function (r) { return r.unregister(); }));
+    }));
+  }
+  if (window.caches) {
+    jobs.push(caches.keys().then(function (keys) {
+      return Promise.all(keys.map(function (k) { return caches.delete(k); }));
+    }));
+  }
+  Promise.all(jobs).then(go, go);
+  setTimeout(go, 1500);
+})();
+</script>
+</head>
+<body><p><a href="https://nosh7.com/">Continue to NOSH7</a></p></body>
+</html>
